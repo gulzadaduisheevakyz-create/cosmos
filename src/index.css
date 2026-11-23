@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Print Optimization Styles - Strict A4 without preambles */
+  @media print {
+    @page {
+      size: A4 portrait;
+      margin: 0mm; /* Suppresses browser headers, URLs, and footers (preambles) */
+    }
+
+    html, body {
+      background: #ffffff !important;
+      color: #000000 !important;
+      font-size: 10pt !important;
+      line-height: 1.35 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 210mm !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Standard non-printable screen elements */
+    .no-print,
+    .print\:hidden,
+    button,
+    nav,
+    aside,
+    header {
+      display: none !important;
+    }
+
+    /* Avoid page breaks inside cards, tables, signatures */
+    .avoid-break,
+    table,
+    tr,
+    .signature-section {
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+
+    /* =============================================================
+       UNIFIED 'print-active' TARGETING FOR window.printDocument()
+       When window.printDocument(containerId) adds 'print-active',
+       this ensures ONLY the targeted container is captured on paper/PDF
+       without any preambles, sidebars, or modal backdrops.
+       ============================================================= */
+    body:has(.print-active) {
+      background: #ffffff !important;
+      overflow: visible !important;
+    }
+
+    body:has(.print-active) aside,
+    body:has(.print-active) nav,
+    body:has(.print-active) header,
+    body:has(.print-active) .no-print,
+    body:has(.print-active) .fixed.inset-0:not(:has(.print-active)):not(.print-active),
+    body:has(.print-active) main > *:not(:has(.print-active)):not(.print-active) {
+      display: none !important;
+    }
+
+    body:has(.print-active) * {
+      visibility: hidden;
+    }
+
+    body:has(.print-active) .print-active,
+    body:has(.print-active) .print-active * {
+      visibility: visible !important;
+    }
+
+    .print-active {
+      display: block !important;
+      position: absolute !important;
+      left: 0 !important;
+      top: 0 !important;
+      width: 210mm !important; /* Exact A4 width */
+      min-height: 297mm !important; /* Exact A4 height */
+      box-sizing: border-box !important;
+      margin: 0 auto !important;
+      padding: 15mm !important; /* Clean inner margin replacing browser margin */
+      background: #ffffff !important;
+      color: #000000 !important;
+      z-index: 999999 !important;
+    }
+
+    #printable-receipt.print-active {
+      width: 80mm !important;
+      margin: 0 auto !important;
+      padding: 5mm !important;
+    }
+
+    /* =============================================================
+       FALLBACK SELECTORS FOR DIRECT ID PRINTING
+       ============================================================= */
+    body:has(#printable-certificate) aside,
+    body:has(#printable-certificate) nav,
+    body:has(#printable-certificate) header,
+    body:has(#printable-certificate) main,
+    body:has(#printable-certificate) .fixed.inset-0 {
+      display: none !important;
+    }
+    body:has(#printable-certificate) * { visibility: hidden; }
+    body:has(#printable-certificate) #printable-certificate,
+    body:has(#printable-certificate) #printable-certificate * { visibility: visible !important; }
+    body:has(#printable-certificate) #printable-certificate {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has(#printable-daily-sales-report) aside,
+    body:has(#printable-daily-sales-report) nav,
+    body:has(#printable-daily-sales-report) header,
+    body:has(#printable-daily-sales-report) main,
+    body:has(#printable-daily-sales-report) .fixed.inset-0:not(:has(#printable-daily-sales-report)) {
+      display: none !important;
+    }
+    body:has(#printable-daily-sales-report) * { visibility: hidden; }
+    body:has(#printable-daily-sales-report) #printable-daily-sales-report,
+    body:has(#printable-daily-sales-report) #printable-daily-sales-report * { visibility: visible !important; }
+    body:has(#printable-daily-sales-report) #printable-daily-sales-report {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has(#printable-receipt) aside,
+    body:has(#printable-receipt) nav,
+    body:has(#printable-receipt) header,
+    body:has(#printable-receipt) main,
+    body:has(#printable-receipt) .fixed.inset-0:not(:has(#printable-receipt)) {
+      display: none !important;
+    }
+    body:has(#printable-receipt) * { visibility: hidden; }
+    body:has(#printable-receipt) #printable-receipt,
+    body:has(#printable-receipt) #printable-receipt * { visibility: visible !important; }
+    body:has(#printable-receipt) #printable-receipt {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 80mm !important;
+      box-sizing: border-box !important; padding: 5mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important; margin: 0 auto !important;
+    }
+
+    body:has(#printable-batch-payroll) aside,
+    body:has(#printable-batch-payroll) nav,
+    body:has(#printable-batch-payroll) header,
+    body:has(#printable-batch-payroll) main,
+    body:has(#printable-batch-payroll) .fixed.inset-0:not(:has(#printable-batch-payroll)) {
+      display: none !important;
+    }
+    body:has(#printable-batch-payroll) * { visibility: hidden; }
+    body:has(#printable-batch-payroll) #printable-batch-payroll,
+    body:has(#printable-batch-payroll) #printable-batch-payroll * { visibility: visible !important; }
+    body:has(#printable-batch-payroll) #printable-batch-payroll {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has([id^="payslip-paper-"]) aside,
+    body:has([id^="payslip-paper-"]) nav,
+    body:has([id^="payslip-paper-"]) header,
+    body:has([id^="payslip-paper-"]) main,
+    body:has([id^="payslip-paper-"]) .fixed.inset-0:not(:has([id^="payslip-paper-"])) {
+      display: none !important;
+    }
+    body:has([id^="payslip-paper-"]) * { visibility: hidden; }
+    body:has([id^="payslip-paper-"]) [id^="payslip-paper-"],
+    body:has([id^="payslip-paper-"]) [id^="payslip-paper-"] * { visibility: visible !important; }
+    body:has([id^="payslip-paper-"]) [id^="payslip-paper-"] {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has(#printable-active-employees) aside,
+    body:has(#printable-active-employees) nav,
+    body:has(#printable-active-employees) header,
+    body:has(#printable-active-employees) main > *:not(#printable-active-employees) {
+      display: none !important;
+    }
+    body:has(#printable-active-employees) * { visibility: hidden; }
+    body:has(#printable-active-employees) #printable-active-employees,
+    body:has(#printable-active-employees) #printable-active-employees * { visibility: visible !important; }
+    body:has(#printable-active-employees) #printable-active-employees {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has(#printable-former-employees) aside,
+    body:has(#printable-former-employees) nav,
+    body:has(#printable-former-employees) header,
+    body:has(#printable-former-employees) main > *:not(#printable-former-employees) {
+      display: none !important;
+    }
+    body:has(#printable-former-employees) * { visibility: hidden; }
+    body:has(#printable-former-employees) #printable-former-employees,
+    body:has(#printable-former-employees) #printable-former-employees * { visibility: visible !important; }
+    body:has(#printable-former-employees) #printable-former-employees {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    body:has(#printable-business-expenses) aside,
+    body:has(#printable-business-expenses) nav,
+    body:has(#printable-business-expenses) header,
+    body:has(#printable-business-expenses) main > *:not(#printable-business-expenses) {
+      display: none !important;
+    }
+    body:has(#printable-business-expenses) * { visibility: hidden; }
+    body:has(#printable-business-expenses) #printable-business-expenses,
+    body:has(#printable-business-expenses) #printable-business-expenses * { visibility: visible !important; }
+    body:has(#printable-business-expenses) #printable-business-expenses {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 210mm !important;
+      box-sizing: border-box !important; padding: 15mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+
+    .print-active.print-landscape {
+      width: 297mm !important;
+      min-height: 210mm !important;
+      padding: 10mm !important;
+    }
+
+    body:has(#printable-floorplan) aside,
+    body:has(#printable-floorplan) nav,
+    body:has(#printable-floorplan) header,
+    body:has(#printable-floorplan) main > *:not(#printable-floorplan) {
+      display: none !important;
+    }
+    body:has(#printable-floorplan) * { visibility: hidden; }
+    body:has(#printable-floorplan) #printable-floorplan,
+    body:has(#printable-floorplan) #printable-floorplan * { visibility: visible !important; }
+    body:has(#printable-floorplan) #printable-floorplan {
+      position: absolute !important; left: 0 !important; top: 0 !important; width: 280mm !important;
+      box-sizing: border-box !important; padding: 10mm !important;
+      display: block !important; background: #ffffff !important; color: #000000 !important; z-index: 999999 !important;
+    }
+  }
+}

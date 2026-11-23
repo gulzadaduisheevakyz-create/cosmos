@@ -1,0 +1,6 @@
+{
+  "name": "Cosmos Beauty Salon Management System",
+  "description": "Comprehensive salon operations, employee settings, automatic target commissions, WPS payroll, business gross income, monthly fixed & petty expenses, and profit & loss dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
